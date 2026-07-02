@@ -8,34 +8,9 @@ import hmac
 import base64
 from datetime import datetime
 
-DB_NAME = "p2p_auth.db"
-
-st.set_page_config(
-    page_title="Secure P2P Authentication",
-    page_icon="🔐",
-    layout="wide"
-)
-
-st.markdown("""
-<style>
-.stButton>button {
-    background-color: #22a447;
-    color: white;
-    border-radius: 10px;
-    padding: 0.6rem 1rem;
-    font-weight: 600;
-}
-.main-card {
-    background-color: #f7f9fc;
-    padding: 20px;
-    border-radius: 16px;
-    border: 1px solid #e5e7eb;
-}
-</style>
-""", unsafe_allow_html=True)
-
-
 # ---------------- DATABASE ----------------
+
+DB_NAME = "p2p_auth.db"
 
 def get_connection():
     return sqlite3.connect(DB_NAME, check_same_thread=False)
@@ -185,7 +160,7 @@ def verify_mac(key, message, mac_value):
     return hmac.compare_digest(expected_mac, mac_value)
 
 
-# ---------------- INIT ----------------
+# ---------------- INITIALIZATION ----------------
 
 create_tables()
 
@@ -203,6 +178,33 @@ if "logged_in" not in st.session_state:
 
 if "current_peer" not in st.session_state:
     st.session_state.current_peer = None
+
+
+# ---------------- WEB Application ----------------
+
+st.set_page_config(
+    page_title="Secure P2P Authentication",
+    page_icon="🔐",
+    layout="wide"
+)
+
+st.markdown("""
+<style>
+.stButton>button {
+    background-color: #22a447;
+    color: white;
+    border-radius: 10px;
+    padding: 0.6rem 1rem;
+    font-weight: 600;
+}
+.main-card {
+    background-color: #f7f9fc;
+    padding: 20px;
+    border-radius: 16px;
+    border: 1px solid #e5e7eb;
+}
+</style>
+""", unsafe_allow_html=True)
 
 
 # ---------------- SIDEBAR ----------------
